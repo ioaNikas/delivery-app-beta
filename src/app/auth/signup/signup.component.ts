@@ -13,7 +13,7 @@ import { UserQuery } from '../+state/auth.query';
 export class SignupComponent implements OnInit {
 
   form = new FormGroup({
-    eMail: new FormControl(),
+    email: new FormControl(),
     password: new FormControl(),
     job: new FormControl()
   });
@@ -25,13 +25,13 @@ export class SignupComponent implements OnInit {
   constructor(private authService: AuthService, private userQuery: UserQuery) { }
 
   ngOnInit() {
-    this.users = this.userQuery.selectAll();
   }
 
   signUp(){
-    console.log(this.form.value);
-    console.log(this.form.value.job);
-    this.authService.login(this.form.value.eMail, this.form.value.password, this.form.value.job);
+    this.authService.signUp(this.form.value.email, this.form.value.password, this.form.value.job);
   }
 
+  logIn(){
+    this.authService.logIn(this.form.value.email, this.form.value.password, this.form.value.job);
+  }
 }

@@ -8,28 +8,40 @@ import { createUser } from './auth.model';
 
 
 @Injectable({
-  providedIn: 'root'
+ providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth, private userStore: UserStore) { }
+ constructor(private afAuth: AngularFireAuth, private userStore: UserStore) { }
 
-  public signUp(email: string, password: string){
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-  }
+ public signUp(email: string, password: string, job: string){
+   this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+   .catch(error => console.log(error))
+   .then(data => this.storeLogedInUser(data, job));
+ }
 
-  public login(email: string, password: string, job: string){
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    .catch(error => console.log(error))
-    .then(data => {
-      if (data && data.user){
-        const user = createUser( { uid: data.user.uid, email : data.user.email, job} );
-        this.userStore.add(user);
-      }
-    });
-  }
+ public logIn(email: string, password: string, job: string){
+   this.afAuth.auth.signInWithEmailAndPassword(email, password)
+   .catch(error => console.log(error))
+   .then(data => this.storeLogedInUser(data, job));
+ }
 
-  public disconnect(){
+ private storeLogedInUser(creds: any, job: string) {
+   if (creds && creds.user){
+     const user = createUser( { uid: creds.user.uid, email : creds.user.email, job} );
+     this.userStore.add(user);
+     return true;
+   }
 
-  }
+   return false;
+ }
+
+ public disconnect(){
+   this.afAuth.auth.signOut()
+   .catch(error => console.log(error))
+   .then((r) => {
+     console.log(r);
+     this.userStore.remove();
+   });
+ }
 }
