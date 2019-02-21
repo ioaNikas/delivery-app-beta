@@ -14,5 +14,5 @@ export class UserQuery extends QueryEntity<State, User> {
 
   constructor(protected store: UserStore) {
     super(store);
-}
+  }
 }

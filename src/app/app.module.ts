@@ -24,13 +24,15 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
-    SidebarComponent
+    SidebarComponent,
+    ViewMovieComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,10 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     MatTabsModule,
     MatSidenavModule,
     MatInputModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([
+      { path: 'movie', component: ViewMovieComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'movie' },
+    ]),
     environment.production ?
         [] :
         [ AkitaNgDevtools.forRoot(), AkitaNgRouterStoreModule.forRoot() ],

@@ -1,0 +1,12 @@
+<form [formGroup]="form" (ngSubmit)="addMovie()" fxLayout="column">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Title" formControlName="title" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Director" formControlName="director" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Kind" formControlName="kind" />
+  </mat-form-field>
+  <button type="submit">Add movie</button>
+</form>

@@ -1,3 +1,5 @@
-<ul>
-  <li></li>
-</ul>
+<div>
+  <ul *ngFor="let movie of movies$ | async">
+    <li>{{ movie.title }}</li>
+  </ul>
+</div>
