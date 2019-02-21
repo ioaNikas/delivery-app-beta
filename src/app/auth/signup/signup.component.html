@@ -1,0 +1,26 @@
+<form (ngSubmit)="signUp()" [formGroup]="form">
+  <label for="eMail">E-mail</label>
+  <input formControlName="eMail" type="email">
+  <label for="password">Password</label>
+  <input formControlName="password" type="password">
+
+  <mat-radio-group formControlName="job">
+    <mat-radio-button value="distributor">
+      Distributor
+    </mat-radio-button>
+    <mat-radio-button value="productor">
+      Productor
+    </mat-radio-button>
+    <mat-radio-button value="laboratory">
+      Laboratory
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <button type="submit">signUp</button>
+</form>
+
+
+
+<ul *ngFor="let user of users | async">
+  <li>{{user.email}}</li>
+</ul>
