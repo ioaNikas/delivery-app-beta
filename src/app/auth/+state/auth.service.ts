@@ -22,11 +22,14 @@ export class AuthService {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
     .catch(error => console.log(error))
     .then(data => {
-      console.log(data)
-      if (data !== undefined){
+      if (data && data.user){
         const user = createUser( { uid: data.user.uid, email : data.user.email, job} );
         this.userStore.add(user);
       }
     });
+  }
+
+  public disconnect(){
+
   }
 }
