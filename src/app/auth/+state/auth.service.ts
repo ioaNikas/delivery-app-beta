@@ -10,20 +10,22 @@ export class AuthService {
 
  constructor(private afAuth: AngularFireAuth, private store: AuthStore) { }
 
- public async signUp(email: string, password: string, job: string){
+ public async signUp(email: string, password: string, job: string) {
    try {
     const data = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-    // TODO add user inside collection `users`
     this.storeLogedInUser(data, job);
    } catch (err) {
     throw new Error('Something when wrong : ' + err);
    }
  }
 
- public logIn(email: string, password: string, job: string){
-   this.afAuth.auth.signInWithEmailAndPassword(email, password)
-   .catch(error => console.log(error))
-   .then(data => this.storeLogedInUser(data, job));
+ public async logIn(email: string, password: string, job: string) {
+   try {
+    const data = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    this.storeLogedInUser(data, job);
+   } catch (err) {
+    throw new Error('Something when wrong : ' + err);
+   }
  }
 
  private storeLogedInUser(creds: any, job: string) {

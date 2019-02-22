@@ -34,8 +34,8 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     AppComponent,
     SignupComponent,
     SidebarComponent,
-    ViewMovieComponent
-    LoggerComponent
+    ViewMovieComponent,
+    LoggerComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,8 +48,8 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     MatSidenavModule,
     MatInputModule,
     RouterModule.forRoot([
-      { path: 'movie', component: ViewMovieComponent },
-      { path: '', pathMatch: 'full', redirectTo: 'movie' },
+      { path: 'movie/:id', component: ViewMovieComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'movie/add' },
     ]),
     environment.production ?
         [] :

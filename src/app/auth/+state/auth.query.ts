@@ -23,4 +23,9 @@ export class AuthQuery extends Query<State> {
       distinctUntilChanged()
     );
   }
+
+  get idUser(): string {
+    return this.getValue().user.uid;
+  }
+
 }

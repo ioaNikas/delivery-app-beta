@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../+state/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '../+state/auth.model';
-import { AuthQuery } from '../+state/auth.query';
+
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
 
 
 
-  constructor(private authService: AuthService, private userQuery: AuthQuery) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(this.form.value.email, this.form.value.password, this.form.value.job);
   }
 
-  logIn(){
+  logIn() {
     this.authService.logIn(this.form.value.email, this.form.value.password, this.form.value.job);
   }
 }

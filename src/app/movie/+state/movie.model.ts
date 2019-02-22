@@ -6,6 +6,7 @@ export type Movie = {
   title: string;
   director: string;
   kind: string;
+  userId: string
 };
 
 export function createMovie(movie: Partial<Movie>) {
@@ -13,6 +14,7 @@ export function createMovie(movie: Partial<Movie>) {
     id: guid(),
     title: movie.title,
     director: movie.director,
-    kind: movie.kind
+    kind: movie.kind,
+    userId: movie.userId
   } as Movie;
 }

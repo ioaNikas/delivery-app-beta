@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Movie } from 'src/app/movie/+state/movie.model';
 import { MovieQuery } from 'src/app/movie/+state/movie.query';
 
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,10 +14,9 @@ export class SidebarComponent implements OnInit {
 
   movies$: Observable<Movie[]>;
 
-  constructor(private moviequery: MovieQuery) { }
+  constructor(private movieQuery: MovieQuery) { }
 
   ngOnInit() {
-    this.movies$ = this.moviequery.selectAll();
+    this.movies$ = this.movieQuery.moviesOfUser$();
   }
-
 }

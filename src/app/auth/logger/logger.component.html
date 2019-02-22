@@ -1,5 +1,2 @@
-<ng-container *ngIf="(user$ | async); else connexion">
-    <button (click)="logOut()" mat-icon-button>log out</button>
-</ng-container>
-
-<ng-template #connexion> connect button </ng-template>
+<button *ngIf="this.authQuery.isLoggedIn$ | async" (click)="logOut()" mat-icon-button>Log out</button>
+<app-signup *ngIf="!(this.authQuery.isLoggedIn$ | async)"></app-signup>

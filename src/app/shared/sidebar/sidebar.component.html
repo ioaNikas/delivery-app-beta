@@ -1,5 +1,6 @@
 <div>
+  <p [routerLink]="['/movie/add']" routerLinkActive="router-link-active" >Add</p>
   <ul *ngFor="let movie of movies$ | async">
-    <li>{{ movie.title }}</li>
+    <li [routerLink]="['/movie', movie.id]" routerLinkActive="router-link-active">{{ movie.title }}{{movie.userId}}</li>
   </ul>
 </div>
