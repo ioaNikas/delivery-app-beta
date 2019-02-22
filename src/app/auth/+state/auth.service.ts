@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth'
-import { UserStore } from './auth.store';
+import { AuthStore } from './auth.store';
 import { createUser } from './auth.model';
-
-
-
-
 
 @Injectable({
  providedIn: 'root'
 })
 export class AuthService {
 
- constructor(private afAuth: AngularFireAuth, private userStore: UserStore) { }
+ constructor(private afAuth: AngularFireAuth, private store: AuthStore) { }
 
- public signUp(email: string, password: string, job: string){
-   this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-   .catch(error => console.log(error))
-   .then(data => this.storeLogedInUser(data, job));
+ public async signUp(email: string, password: string, job: string){
+   try {
+    const data = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+    // TODO add user inside collection `users`
+    this.storeLogedInUser(data, job);
+   } catch (err) {
+    throw new Error('Something when wrong : ' + err);
+   }
  }
 
  public logIn(email: string, password: string, job: string){
@@ -27,13 +27,9 @@ export class AuthService {
  }
 
  private storeLogedInUser(creds: any, job: string) {
-   if (creds && creds.user){
-     const user = createUser( { uid: creds.user.uid, email : creds.user.email, job} );
-     this.userStore.add(user);
-     return true;
-   }
-
-   return false;
+  if (!creds || !creds.user) { throw new Error('No user found'); }
+  const user = createUser( { uid: creds.user.uid, email : creds.user.email, job} );
+  this.store.update({user});
  }
 
  public disconnect(){
@@ -41,7 +37,7 @@ export class AuthService {
    .catch(error => console.log(error))
    .then((r) => {
      console.log(r);
-     this.userStore.remove();
+     this.store.update({user: null});
    });
  }
 }

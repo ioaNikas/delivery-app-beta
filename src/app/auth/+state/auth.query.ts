@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { QueryEntity } from '@datorama/akita';
-import { State, UserStore } from './auth.store';
+import { Query } from '@datorama/akita';
+import { State, AuthStore } from './auth.store';
 import { User } from './auth.model';
-
+import { Observable } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 
 
@@ -10,9 +11,16 @@ import { User } from './auth.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserQuery extends QueryEntity<State, User> {
+export class AuthQuery extends Query<State> {
 
-  constructor(protected store: UserStore) {
+  constructor(protected store: AuthStore) {
     super(store);
+  }
+
+  get isLoggedIn$(): Observable<boolean> {
+    return this.select(state => state.user).pipe(
+      map(user => !!user),
+      distinctUntilChanged()
+    );
   }
 }

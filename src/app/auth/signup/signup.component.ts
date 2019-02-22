@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../+state/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '../+state/auth.model';
-import { UserQuery } from '../+state/auth.query';
+import { AuthQuery } from '../+state/auth.query';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
 
 
 
-  constructor(private authService: AuthService, private userQuery: UserQuery) { }
+  constructor(private authService: AuthService, private userQuery: AuthQuery) { }
 
   ngOnInit() {
   }
