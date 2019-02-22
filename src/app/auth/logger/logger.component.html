@@ -1,0 +1,5 @@
+<ng-container *ngIf="(user$ | async); else connexion">
+    <button (click)="logOut()" mat-icon-button>log out</button>
+</ng-container>
+
+<ng-template #connexion> connect button </ng-template>

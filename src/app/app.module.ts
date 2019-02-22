@@ -3,11 +3,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 
@@ -18,6 +19,7 @@ import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 
 import { environment } from '../environments/environment';
 import { SignupComponent } from './auth/signup/signup.component';
+import { LoggerComponent } from './auth/logger/logger.component';
 import { AppComponent } from './app.component';
 
 // Firebase
@@ -33,6 +35,7 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     SignupComponent,
     SidebarComponent,
     ViewMovieComponent
+    LoggerComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     MatRadioModule,
     MatFormFieldModule,
     MatTabsModule,
+    MatToolbarModule,
     MatSidenavModule,
     MatInputModule,
     RouterModule.forRoot([
