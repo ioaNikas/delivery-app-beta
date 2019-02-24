@@ -7,6 +7,12 @@ export type User = {
   job: string;
 };
 
+export interface UserForm {
+  email: string;
+  pwd: string;
+  job: string;
+}
+
 export function createUser(user: Partial<User>) {
   return {
     uid: user.uid,

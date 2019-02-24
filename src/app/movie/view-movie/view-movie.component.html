@@ -8,7 +8,7 @@
   <mat-form-field>
     <input matInput type="text" placeholder="Kind" formControlName="kind" [value]="movie.kind" />
   </mat-form-field>
-  <button type="submit">Add movie</button>
+  <button mat-raised-button color="primary" type="submit">Add movie</button>
 </form>
 
 <form [formGroup]="form" (ngSubmit)="addMovie()" fxLayout="column">
@@ -21,7 +21,7 @@
     <mat-form-field>
       <input matInput type="text" placeholder="Kind" formControlName="kind" [value]=""/>
     </mat-form-field>
-    <button type="submit">Add movie</button>
+    <button mat-raised-button color="primary" type="submit">Add movie</button>
   </form>
 
 <ul *ngIf="movie$ | async; let movie">

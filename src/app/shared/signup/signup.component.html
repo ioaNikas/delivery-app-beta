@@ -1,18 +1,18 @@
 <mat-tab-group>
   <mat-tab label="Login">
-    <form [formGroup]="form" (ngSubmit)="logIn()" fxLayout="column">
+    <form [formGroup]="form" (ngSubmit)="signin()" fxLayout="column">
       <mat-form-field>
         <input matInput type="email" placeholder="Email" formControlName="email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" formControlName="password" />
+        <input matInput type="password" placeholder="Password" formControlName="pwd" />
       </mat-form-field>
       <mat-radio-group formControlName="job">
         <mat-radio-button value="distributor">
           Distributor
         </mat-radio-button>
-        <mat-radio-button value="productor">
-          Productor
+        <mat-radio-button value="producer">
+          Producer
         </mat-radio-button>
         <mat-radio-button value="laboratory">
           Laboratory
@@ -22,19 +22,18 @@
     </form>
   </mat-tab>
   <mat-tab label="Signup">
-    <form [formGroup]="form" (ngSubmit)="signUp()" fxLayout="column">
+    <form [formGroup]="form" (ngSubmit)="signup()" fxLayout="column">
       <mat-form-field>
         <input matInput type="email" placeholder="Email" formControlName="email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" formControlName="password" />
-      </mat-form-field>
-      <mat-radio-group formControlName="job">
+        <input matInput type="password" placeholder="Password" formControlName="pwd" />
+      </mat-form-field><mat-radio-group formControlName="job">
         <mat-radio-button value="distributor">
           Distributor
         </mat-radio-button>
-        <mat-radio-button value="productor">
-          Productor
+        <mat-radio-button value="producer">
+          Producer
         </mat-radio-button>
         <mat-radio-button value="laboratory">
           Laboratory

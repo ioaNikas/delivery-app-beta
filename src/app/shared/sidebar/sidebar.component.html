@@ -1,6 +1,9 @@
-<div>
-  <p [routerLink]="['/movie/add']" routerLinkActive="router-link-active" >Add</p>
-  <ul *ngFor="let movie of movies$ | async">
-    <li [routerLink]="['/movie', movie.id]" routerLinkActive="router-link-active">{{ movie.title }}{{movie.userId}}</li>
-  </ul>
+<div *ngIf="job$ && (job$ | async); let job">
+  <div *ngIf="job === 'producer'">
+    <button mat-raised-button color="primary" [routerLink]="['/movie/add']" routerLinkActive="router-link-active" >Add new movie</button>
+    <h2>Your movies :</h2>
+    <ul *ngFor="let movie of movies$ | async">
+      <li [routerLink]="['/movie', movie.id]" routerLinkActive="router-link-active">{{ movie.title }}</li>
+    </ul>
+  </div>
 </div>

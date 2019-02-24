@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth'
 import { AuthStore } from './auth.store';
 import { createUser } from './auth.model';
+import { AuthQuery } from './auth.query';
 
 @Injectable({
  providedIn: 'root'
 })
 export class AuthService {
 
- constructor(private afAuth: AngularFireAuth, private store: AuthStore) { }
+ constructor(private afAuth: AngularFireAuth, private store: AuthStore, private authQuery: AuthQuery) { }
 
- public async signUp(email: string, password: string, job: string) {
+ public async signup(email: string, password: string, job: string) {
    try {
     const data = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
     this.storeLogedInUser(data, job);
@@ -19,7 +20,7 @@ export class AuthService {
    }
  }
 
- public async logIn(email: string, password: string, job: string) {
+ public async signin(email: string, password: string, job: string) {
    try {
     const data = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
     this.storeLogedInUser(data, job);
@@ -34,12 +35,18 @@ export class AuthService {
   this.store.update({user});
  }
 
+ public async changeJob(job: string){
+    const userAcutal = this.authQuery.user;
+    const user = createUser( { uid: userAcutal.uid, email : userAcutal.email, job} );
+    this.store.update({user});
+ }
+
  public disconnect(){
    this.afAuth.auth.signOut()
    .catch(error => console.log(error))
    .then((r) => {
      console.log(r);
-     this.store.update({user: null});
+     this.store.update({user: { uid: null, email: null, job: null}});
    });
  }
 }

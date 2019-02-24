@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie } from 'src/app/movie/+state/movie.model';
 import { MovieQuery } from 'src/app/movie/+state/movie.query';
+import { User, AuthQuery } from 'src/app/auth/+state';
 
 
 
@@ -12,11 +13,13 @@ import { MovieQuery } from 'src/app/movie/+state/movie.query';
 })
 export class SidebarComponent implements OnInit {
 
+  job$: Observable<string>;
   movies$: Observable<Movie[]>;
 
-  constructor(private movieQuery: MovieQuery) { }
+  constructor(private movieQuery: MovieQuery, private authQuery: AuthQuery) { }
 
   ngOnInit() {
-    this.movies$ = this.movieQuery.moviesOfUser$();
+    this.movies$ = this.movieQuery.selectAll();
+    this.job$ = this.authQuery.job$;
   }
 }

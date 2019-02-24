@@ -15,7 +15,11 @@ export interface State {
 
 const initialState = {
   form: {},
-  user: null,
+  user: {
+    uid : null,
+    email: null,
+    job: null
+  },
 };
 
 @Injectable({

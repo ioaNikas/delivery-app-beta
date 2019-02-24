@@ -1,2 +1,0 @@
-<button *ngIf="this.authQuery.isLoggedIn$ | async" (click)="logOut()" mat-icon-button>Log out</button>
-<app-signup *ngIf="!(this.authQuery.isLoggedIn$ | async)"></app-signup>
