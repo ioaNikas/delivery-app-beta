@@ -9,6 +9,12 @@ export type Movie = {
   userId: string
 };
 
+export interface MovieForm {
+  title: string;
+  director: string;
+  kind: string;
+}
+
 export function createMovie(movie: Partial<Movie>) {
   return {
     id: guid(),
@@ -17,4 +23,12 @@ export function createMovie(movie: Partial<Movie>) {
     kind: movie.kind,
     userId: movie.userId
   } as Movie;
+}
+
+export function createMovieForm(movieForm: Partial<MovieForm>) {
+  return {
+    title: movieForm.title || '',
+    director: movieForm.director || '',
+    kind: movieForm.kind || ''
+  } as MovieForm;
 }

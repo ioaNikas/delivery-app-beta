@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth'
 import { AuthStore } from './auth.store';
-import { createUser } from './auth.model';
+import { createUser, User } from './auth.model';
 import { AuthQuery } from './auth.query';
 
 @Injectable({
@@ -35,18 +35,19 @@ export class AuthService {
   this.store.update({user});
  }
 
- public async changeJob(job: string){
-    const userAcutal = this.authQuery.user;
-    const user = createUser( { uid: userAcutal.uid, email : userAcutal.email, job} );
-    this.store.update({user});
+ public updateUser(user: Partial<User>) {
+  this.store.update(state => ({
+    user: { ...state.user, ...user}
+  }));
  }
+
 
  public disconnect(){
    this.afAuth.auth.signOut()
    .catch(error => console.log(error))
    .then((r) => {
      console.log(r);
-     this.store.update({user: { uid: null, email: null, job: null}});
+     this.store.update({user: null});
    });
  }
 }

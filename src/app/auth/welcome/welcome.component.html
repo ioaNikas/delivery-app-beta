@@ -1,0 +1,20 @@
+<div *ngIf="(user$ | async) as user; else welcome" [ngSwitch]="user.job">
+
+    <div *ngSwitchCase="'producer'">
+      <h1>Welcome producer !</h1>
+    </div>
+    <div *ngSwitchCase="'distributor'">
+      <h1>Welcome distributor !</h1>
+    </div>
+    <div *ngSwitchCase="'laboratory'">
+      <h1>Welcome laboratory !</h1>
+    </div>
+    <div *ngSwitchDefault>
+      <h1>Welcome !</h1>
+    </div>
+
+</div>
+
+<ng-template #welcome>
+  <h1>Welcome !</h1>
+</ng-template>

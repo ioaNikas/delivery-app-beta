@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
 
 
 
@@ -34,6 +35,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
+import { ViewTemplateComponent } from './templateList/view-template/view-template.component';
+import { WelcomeComponent } from './auth/welcome/welcome.component';
 
 
 @NgModule({
@@ -43,6 +46,8 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     SidebarComponent,
     ViewMovieComponent,
     LoggerComponent,
+    ViewTemplateComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +55,7 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     ReactiveFormsModule,
     MatRadioModule,
     MatMenuModule,
+    MatListModule,
     MatDialogModule,
     MatFormFieldModule,
     MatTabsModule,
@@ -60,7 +66,9 @@ import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
     MatInputModule,
     RouterModule.forRoot([
       { path: 'movie/:id', component: ViewMovieComponent },
-      { path: '', pathMatch: 'full', redirectTo: '' },
+      { path: 'templatelist/:id', component: ViewTemplateComponent },
+      { path: 'welcome', component: WelcomeComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'welcome' },
     ]),
     environment.production ?
         [] :

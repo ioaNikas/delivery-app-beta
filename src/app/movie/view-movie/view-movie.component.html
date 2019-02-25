@@ -1,4 +1,5 @@
-<form *ngIf="movie$ | async; let movie" [formGroup]="form" (ngSubmit)="addMovie()" fxLayout="column">
+
+<form *ngIf="movie$ | async as movie, else empty" [formGroup]="form" (ngSubmit)="updateMovie(movie)" fxLayout="column">
   <mat-form-field>
     <input matInput type="text" placeholder="Title" formControlName="title" [value]="movie.title" />
   </mat-form-field>
@@ -8,22 +9,21 @@
   <mat-form-field>
     <input matInput type="text" placeholder="Kind" formControlName="kind" [value]="movie.kind" />
   </mat-form-field>
-  <button mat-raised-button color="primary" type="submit">Add movie</button>
+  <button mat-raised-button color="primary" type="submit">Update movie</button>
 </form>
 
-<form [formGroup]="form" (ngSubmit)="addMovie()" fxLayout="column">
-    <mat-form-field>
-      <input matInput type="text" placeholder="Title" formControlName="title" [value]=""/>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Director" formControlName="director" [value]=""/>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Kind" formControlName="kind" [value]=""/>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Add movie</button>
+<ng-template #empty >
+  <form [formGroup]="form" (ngSubmit)="addMovie()" fxLayout="column">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Title" formControlName="title" [value]=""/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Director" formControlName="director" [value]=""/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Kind" formControlName="kind" [value]=""/>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Add movie</button>
   </form>
+</ng-template>
 
-<ul *ngIf="movie$ | async; let movie">
-  <li>{{movie.title}}</li>
-</ul>

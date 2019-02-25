@@ -1,0 +1,6 @@
+<form [formGroup]="form" (ngSubmit)="addTemplateList()" fxLayout="column">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Title" formControlName="title" [value]=""/>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Add template</button>
+</form>

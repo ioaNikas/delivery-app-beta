@@ -1,14 +1,14 @@
 
 <mat-sidenav-container>
   <!-- Sidenav -->
-  <mat-sidenav #sidenav [opened]="!!(job$ | async)" mode="side">
+  <mat-sidenav #sidenav [opened]="!!(user$ | async)" mode="side">
     <app-sidebar></app-sidebar>
   </mat-sidenav>
   <!-- Content -->
   <mat-sidenav-content>
     <mat-toolbar class="mat-elevation-z2" fxLayout="row-reverse" fxLayoutAlign="space-between center">
       <app-logger (loggedOut)="logout()"></app-logger>
-      <button *ngIf="!!(job$ | async)" mat-icon-button (click)="sidenav.toggle()">
+      <button *ngIf="!!(user$ | async)" mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
     </mat-toolbar>

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Movie } from 'src/app/movie/+state/movie.model';
 import { MovieQuery } from 'src/app/movie/+state/movie.query';
 import { User, AuthQuery } from 'src/app/auth/+state';
+import { TemplateList, TemplateListQuery } from 'src/app/templateList/+state';
 
 
 
@@ -13,13 +14,15 @@ import { User, AuthQuery } from 'src/app/auth/+state';
 })
 export class SidebarComponent implements OnInit {
 
-  job$: Observable<string>;
+  user$: Observable<User>;
   movies$: Observable<Movie[]>;
+  templateList$: Observable<TemplateList[]>;
 
-  constructor(private movieQuery: MovieQuery, private authQuery: AuthQuery) { }
+  constructor(private movieQuery: MovieQuery, private authQuery: AuthQuery, private templateListQuery: TemplateListQuery) { }
 
   ngOnInit() {
-    this.movies$ = this.movieQuery.selectAll();
-    this.job$ = this.authQuery.job$;
+    this.movies$ = this.movieQuery.moviesOfUser$();
+    this.user$ = this.authQuery.select(state => state.user);
+    this.templateList$ = this.templateListQuery.selectAll();
   }
 }

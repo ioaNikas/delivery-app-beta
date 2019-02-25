@@ -10,12 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit  {
 
-  public job$: Observable<string>;
+  public user$: Observable<User>;
 
   constructor(private auth: AuthQuery, private router: Router) {}
 
   async ngOnInit() {
-    this.job$ = this.auth.select(state => state.user.job);
+    this.user$ = this.auth.select(state => state.user);
   }
 
   public logout() {

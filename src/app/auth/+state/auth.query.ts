@@ -24,13 +24,6 @@ export class AuthQuery extends Query<State> {
     );
   }
 
-  get job$(): Observable<string> {
-      return this.select(state => state.user).pipe(
-        map(user => user.job),
-      distinctUntilChanged()
-    );
-  }
-
   get idUser(): string {
     return this.getValue().user.uid;
   }

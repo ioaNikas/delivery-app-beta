@@ -1,12 +1,12 @@
-<ng-container *ngIf="job$ && (job$ | async); else connexion">
+<ng-container *ngIf="user$ | async; else connexion">
   <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon></button>
 </ng-container>
 
 <ng-template #connexion> <button mat-button (click)="openLogin()">Connexion</button> </ng-template>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)='changeJob("producer")'>Producer</button>
-  <button mat-menu-item (click)="changeJob('distributor')">Distributor</button>
-  <button mat-menu-item (click)="changeJob('laboratory')">Laboratory</button>
-  <button mat-menu-item (click)="logout()">Logout</button>
+  <button routerLink="../welcome" mat-menu-item (click)="updateUser('producer')">Producer</button>
+  <button routerLink="../welcome" mat-menu-item (click)="updateUser('distributor')">Distributor</button>
+  <button routerLink="../welcome" mat-menu-item (click)="updateUser('laboratory')">Laboratory</button>
+  <button routerLink="../welcome" mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>

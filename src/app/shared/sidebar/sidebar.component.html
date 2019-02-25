@@ -1,9 +1,22 @@
-<div *ngIf="job$ && (job$ | async); let job">
-  <div *ngIf="job === 'producer'">
-    <button mat-raised-button color="primary" [routerLink]="['/movie/add']" routerLinkActive="router-link-active" >Add new movie</button>
-    <h2>Your movies :</h2>
-    <ul *ngFor="let movie of movies$ | async">
-      <li [routerLink]="['/movie', movie.id]" routerLinkActive="router-link-active">{{ movie.title }}</li>
-    </ul>
-  </div>
+<div *ngIf="(user$ | async) as user" [ngSwitch]="user.job">
+
+  <mat-nav-list *ngSwitchCase="'producer'">
+      <button mat-raised-button color="primary" [routerLink]="['/movie/add']">Add new movie</button>
+      <h2>Your movies :</h2>
+      <mat-list-item *ngFor="let movie of movies$ | async">
+         <a matLine [routerLink]="['/movie/', movie.id]">{{ movie.title }}</a>
+      </mat-list-item>
+  </mat-nav-list>
+
+  <mat-nav-list *ngSwitchCase="'distributor'">
+      <button mat-raised-button color="primary" [routerLink]="['/templatelist/add']">Add new template</button>
+      <h2>Your templates :</h2>
+      <mat-list-item *ngFor="let template of templateList$ | async">
+         <a matLine [routerLink]="['/templatelist/', template.id]">{{ template.title }}</a>
+      </mat-list-item>
+  </mat-nav-list>
+
 </div>
+
+
+

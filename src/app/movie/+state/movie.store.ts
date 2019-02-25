@@ -7,7 +7,6 @@ export interface State extends EntityState<Movie> {
 }
 
 
-
 @Injectable({
   providedIn: 'root'
 })
