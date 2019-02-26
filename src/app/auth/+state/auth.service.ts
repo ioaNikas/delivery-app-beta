@@ -34,7 +34,7 @@ export class AuthService {
     this.authCollection.doc(user.uid).set(user);
     this.store.update({user});
     this.movieService.subscribeOnUserMovies(user.uid);
-    this.getUser(user);
+    this.subscribeOnUser(user);
 
    } catch (err) {
     throw new Error('Something when wrong : ' + err);
@@ -49,7 +49,7 @@ export class AuthService {
     const user = createUser( { uid: data.user.uid, email : data.user.email, job} );
     this.store.update({user});
     this.movieService.subscribeOnUserMovies(user.uid);
-    this.getUser(user);
+    this.subscribeOnUser(user);
 
    } catch (err) {
     throw new Error('Something when wrong : ' + err);
@@ -58,8 +58,8 @@ export class AuthService {
 
 
  public updateUser(user: Partial<User>) {
-  const userAcutal = {...this.authQuery.getValue().user, ...user };
-  this.authCollection.doc(userAcutal.uid).set(userAcutal);
+  const userActual = {...this.authQuery.getValue().user, ...user };
+  this.authCollection.doc(userActual.uid).set(userActual);
  }
 
 
@@ -72,10 +72,10 @@ export class AuthService {
    });
  }
 
- private getUser(user: User) {
+ private subscribeOnUser(user: User) {
     this.db.collection<User>('users', ref => ref.where('uid', '==', user.uid))
     .valueChanges()
-    .subscribe((users: User[]) => { users.map( user => this.store.update({user}));
+    .subscribe((users: User[]) => { users.map(user => this.store.update({user}));
 
     });
   }
