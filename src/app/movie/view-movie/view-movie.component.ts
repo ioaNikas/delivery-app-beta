@@ -46,16 +46,20 @@ export class ViewMovieComponent implements OnInit {
   }
 
   addMovie() {
-    this.movieService.addMovie(this.form.value.title, this.form.value.director, this.form.value.kind);
-    this.form.reset();
+    this.movieService
+    .addMovie(this.form.value)
+    .then(() => this.form.reset())
+    .catch((err) => console.log(err))
   }
 
   updateMovie(movie) {
-    this.movieService.updateMovie(movie, this.form.value);
+    this.movieService.updateMovie(movie, this.form.value)
+    .catch((err) => console.log(err))
   }
 
   deleteMovie(movie) {
-    this.movieService.deleteMovie(movie);
+    this.movieService.deleteMovie(movie)
+    .catch((err) => console.log(err))
   }
 
 }

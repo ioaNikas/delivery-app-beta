@@ -20,34 +20,33 @@ export class MovieService {
      private authQuery: AuthQuery,
      private db: AngularFirestore,
  ) {
-    this.movieCollection = this.db.collection<Movie>('movies')
+    this.movieCollection = this.db.collection<Movie>('movies');
+    this.getMovies();
  }
 
- public addMovie(title: string, director: string, kind: string) {
-  const userId = this.authQuery.idUser;
-  const movie = createMovie( { id: this.db.createId(), title, director, kind, userId } );
-
-  this.movieCollection.doc(movie.id).set(movie)
-  .catch((err) => {
-    throw new Error(`Error while inserting object into firebase collection movies : ${err}`);
-  })
-  .then(() => {
-    this.movieStore.add(movie);
-  })
-  .catch((err) => {
-    throw new Error(`Error while inserting movie into akita state : ${err}`);
+ public addMovie(_movie: Partial<Movie>) {
+  const movie = createMovie( {
+    ..._movie,
+    id: this.db.createId(),
+    userId : this.authQuery.idUser,
   });
+
+  return this.movieCollection.doc(movie.id).set(movie);
  }
 
  public updateMovie(movie: Movie, form) {
-   movie = {...movie, ...form};
-   // @todo update firestore
-   this.movieStore.update(movie.id, movie);
+  movie = {...movie, ...form};
+  return this.movieCollection.doc(movie.id).set(movie);
  }
 
  public deleteMovie(movie: Movie) {
-  // @todo delete firestore
-  this.movieStore.remove(movie.id);
+  return this.movieCollection.doc(movie.id).delete();
+ }
+
+ public getMovies() {
+  this.movieCollection.valueChanges().subscribe((movies: Movie[]) => {
+      this.movieStore.set(movies);
+  });
  }
 
 }
