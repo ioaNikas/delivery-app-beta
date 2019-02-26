@@ -26,9 +26,16 @@ export class MovieService {
  public addMovie(title: string, director: string, kind: string) {
   const userId = this.authQuery.idUser;
   const movie = createMovie( { id: this.db.createId(), title, director, kind, userId } );
+
   this.movieCollection.doc(movie.id).set(movie)
+  .catch((err) => {
+    throw new Error(`Error while inserting object into firebase collection movies : ${err}`);
+  })
   .then(() => {
     this.movieStore.add(movie);
+  })
+  .catch((err) => {
+    throw new Error(`Error while inserting movie into akita state : ${err}`);
   });
  }
 
