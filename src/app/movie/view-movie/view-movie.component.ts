@@ -42,24 +42,23 @@ export class ViewMovieComponent implements OnInit {
     });
 
     this.movie$.subscribe(value => value ? this.form.patchValue(value) : this.form.reset());
-
   }
 
   addMovie() {
     this.movieService
     .addMovie(this.form.value)
     .then(() => this.form.reset())
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
   }
 
   updateMovie(movie) {
     this.movieService.updateMovie(movie, this.form.value)
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
   }
 
   deleteMovie(movie) {
     this.movieService.deleteMovie(movie)
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
   }
 
 }

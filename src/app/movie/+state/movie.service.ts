@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class MovieService {
   public movieCollection: AngularFirestoreCollection<Movie>;
   public movies: Observable<Movie[]>;
+  public collectionName: 'movies';
 
   constructor(
     private movieStore: MovieStore,
@@ -19,8 +20,7 @@ export class MovieService {
     private authQuery: AuthQuery,
     private db: AngularFirestore,
   ) {
-    this.movieCollection = this.db.collection<Movie>('movies');
-    this.getMovies();
+    this.movieCollection = this.db.collection<Movie>(this.collectionName);
   }
 
   // tslint:disable-next-line
@@ -43,8 +43,10 @@ export class MovieService {
     return this.movieCollection.doc(movie.id).delete();
   }
 
-  public getMovies() {
-    this.movieCollection.valueChanges().subscribe((movies: Movie[]) => {
+  public subscribeOnUserMovies(userId) {
+    this.db.collection<Movie>(this.collectionName, ref => ref.where('userId', '==', userId))
+    .valueChanges()
+    .subscribe((movies: Movie[]) => {
       this.movieStore.set(movies);
     });
   }
