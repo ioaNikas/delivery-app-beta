@@ -6,10 +6,6 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged, filter } from 'rxjs/operators';
 import { AuthQuery } from 'src/app/auth/+state/auth.query';
 
-
-
-
-
 @Injectable({
   providedIn: 'root'
 })

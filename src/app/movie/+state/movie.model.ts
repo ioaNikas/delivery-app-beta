@@ -1,5 +1,3 @@
-import { ID, guid } from '@datorama/akita';
-
 // tslint:disable-next-line: interface-over-type-literal
 export type Movie = {
   id: string;
