@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { MovieQuery } from '../+state/movie.query';
 import { Movie } from '../+state/movie.model';
 import { switchMap } from 'rxjs/operators';
+import { PersistNgFormPlugin } from '@datorama/akita';
+import { State, MovieStore } from '../+state';
 
 
 @Component({
@@ -25,6 +27,7 @@ export class ViewMovieComponent implements OnInit {
     private route: ActivatedRoute,
     private movieQuery: MovieQuery,
     private builder: FormBuilder,
+    private movieStore: MovieStore
     ) { }
 
   ngOnInit() {
@@ -38,22 +41,21 @@ export class ViewMovieComponent implements OnInit {
       kind: ['']
     });
 
+    this.movie$.subscribe(value => value ? this.form.patchValue(value) : this.form.reset());
+
   }
 
   addMovie() {
     this.movieService.addMovie(this.form.value.title, this.form.value.director, this.form.value.kind);
+    this.form.reset();
   }
 
   updateMovie(movie) {
-    console.log(this.form.value)
-    const newMovie = {
-      id: movie.id,
-      title: this.form.value.title,
-      director: this.form.value.director,
-      kind: this.form.value.kind,
-      userId: movie.userId
-    };
-    this.movieService.updateMovie(newMovie);
+    this.movieService.updateMovie(movie, this.form.value);
+  }
+
+  deleteMovie(movie) {
+    this.movieService.deleteMovie(movie);
   }
 
 }

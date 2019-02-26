@@ -23,8 +23,13 @@ export class MovieService {
   this.movieStore.add(movie);
  }
 
- public updateMovie(newMovie: Movie) {
-  this.movieStore.update(newMovie.id, newMovie);
+ public updateMovie(movie: Movie, form) {
+   movie = {...movie, ...form};
+   this.movieStore.update(movie.id, movie);
+ }
+
+ public deleteMovie(movie: Movie) {
+  this.movieStore.remove(movie.id);
  }
 
 }
