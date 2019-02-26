@@ -37,7 +37,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
 import { ViewTemplateComponent } from './templateList/view-template/view-template.component';
 import { WelcomeComponent } from './auth/welcome/welcome.component';
-
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,8 @@ import { WelcomeComponent } from './auth/welcome/welcome.component';
         [] :
         [ AkitaNgDevtools.forRoot(), AkitaNgRouterStoreModule.forRoot() ],
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   entryComponents: [SignupComponent],
   providers: [],
