@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class MovieService {
   public movieCollection: AngularFirestoreCollection<Movie>;
   public movies: Observable<Movie[]>;
-  public collectionName: 'movies';
+  public collectionName = 'movies';
 
   constructor(
     private movieStore: MovieStore,
