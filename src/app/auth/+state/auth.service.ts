@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth} from '@angular/fire/auth'
 import { AuthStore } from './auth.store';
-import { createUser, User, UserDB, createUserDB } from './auth.model';
+import { createUser, User } from './auth.model';
 import { AuthQuery } from './auth.query';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { takeUntil } from 'rxjs/operators';
-
+import { filter, switchMap } from 'rxjs/operators';
 
 @Injectable({
  providedIn: 'root'
 })
 export class AuthService {
 
- public authCollection: AngularFirestoreCollection<UserDB>;
+ public authCollection: AngularFirestoreCollection<User>;
 
  constructor(
    private afAuth: AngularFireAuth,
    private store: AuthStore,
    private db: AngularFirestore,
    private authQuery: AuthQuery) {
-  this.authCollection = this.db.collection<UserDB>('users');
+  this.authCollection = this.db.collection<User>('users');
 
   this.subscribeOnUser();
 
@@ -30,8 +29,8 @@ export class AuthService {
     const data = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
 
     if (!data || !data.user) { throw new Error('No user found'); }
-    const user = createUserDB( {job} );
-    this.authCollection.doc(data.user.uid).set(user);
+    const user = createUser( {job, uid: data.user.uid} );
+    this.authCollection.doc(user.uid).set(user);
 
    } catch (err) {
     throw new Error('Something when wrong : ' + err);
@@ -51,29 +50,21 @@ export class AuthService {
 
 
  public updateUser(user: Partial<User>) {
-  return this.authCollection.doc(this.authQuery.getValue().user.uid).set(user);
+  const currentUser = this.authQuery.getValue().user;
+  return this.authCollection.doc(currentUser.uid).set({...currentUser, ...user});
  }
 
 
  public disconnect() {
-   this.afAuth.auth.signOut()
-   .catch(error => console.log(error))
-   .then((r) => {
-     console.log(r);
-     this.store.update({user: null});
-   });
-
+  this.afAuth.auth.signOut()
+  .catch(error => console.log(error))
+  .then(() => this.store.update({user: null}));
  }
 
  private subscribeOnUser() {
-
-    this.afAuth.user.subscribe((auth) => {
-      if (auth) {
-        this.db.collection<UserDB>('users').doc(auth.uid)
-        .valueChanges()
-        .subscribe((user: UserDB) => { console.log("hello"); this.store.update( { user: createUser({...auth, ...user}) } ); });
-      }
-    });
+    this.afAuth.authState.pipe(
+      filter(user => !!user),
+      switchMap(({uid}) => this.db.collection<User>('users').doc(uid).valueChanges())
+    ).subscribe((user: User) => this.store.update({ user }));
   }
-
 }
