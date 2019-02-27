@@ -35,7 +35,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
-import { ViewTemplateComponent } from './templateList/view-template/view-template.component';
 import { WelcomeComponent } from './auth/welcome/welcome.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
@@ -46,7 +45,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     SidebarComponent,
     ViewMovieComponent,
     LoggerComponent,
-    ViewTemplateComponent,
     WelcomeComponent,
   ],
   imports: [
@@ -66,7 +64,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MatInputModule,
     RouterModule.forRoot([
       { path: 'movie/:id', component: ViewMovieComponent },
-      { path: 'templatelist/:id', component: ViewTemplateComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', pathMatch: 'full', redirectTo: 'welcome' },
     ]),

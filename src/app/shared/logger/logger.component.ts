@@ -34,6 +34,7 @@ export class LoggerComponent implements OnInit {
 
   public updateUser(job: string) {
     const user = {job};
-    this.service.updateUser(user);
+    this.service.updateUser(user)
+    .catch((err) => console.log(err));
   }
 }

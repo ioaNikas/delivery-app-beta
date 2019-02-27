@@ -59,7 +59,7 @@ export class AuthService {
 
  public updateUser(user: Partial<User>) {
   const userActual = {...this.authQuery.getValue().user, ...user };
-  this.authCollection.doc(userActual.uid).set(userActual);
+  return this.authCollection.doc(userActual.uid).set(userActual);
  }
 
 
@@ -72,8 +72,8 @@ export class AuthService {
    });
  }
 
- private subscribeOnUser(user: User) {
-    this.db.collection<User>('users', ref => ref.where('uid', '==', user.uid))
+ private subscribeOnUser(userActual: User) {
+    this.db.collection<User>('users', ref => ref.where('uid', '==', userActual.uid))
     .valueChanges()
     .subscribe((users: User[]) => { users.map(user => this.store.update({user}));
 

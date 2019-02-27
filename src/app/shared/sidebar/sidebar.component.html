@@ -11,9 +11,6 @@
   <mat-nav-list *ngSwitchCase="'distributor'">
       <button mat-raised-button color="primary" [routerLink]="['/templatelist/add']">Add new template</button>
       <h2>Your templates :</h2>
-      <mat-list-item *ngFor="let template of templateList$ | async">
-         <a matLine [routerLink]="['/templatelist/', template.id]">{{ template.title }}</a>
-      </mat-list-item>
   </mat-nav-list>
 
 </div>
