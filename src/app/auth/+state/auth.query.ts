@@ -3,7 +3,7 @@ import { Query } from '@datorama/akita';
 import { State, AuthStore } from './auth.store';
 import { User } from './auth.model';
 import { Observable } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { map, distinctUntilChanged, filter } from 'rxjs/operators';
 
 
 
@@ -31,5 +31,9 @@ export class AuthQuery extends Query<State> {
   get user(): User {
     return this.getValue().user;
   }
+
+  selectUser$ = this.select(state => state.user).pipe(filter(user => !!user));
+
+  isLogout$ = this.select(state => state.user).pipe(filter(user => !user));
 
 }

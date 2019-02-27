@@ -5,22 +5,22 @@ import { AuthQuery } from 'src/app/auth/+state/auth.query';
 import { MovieQuery } from './movie.query';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
   public movieCollection: AngularFirestoreCollection<Movie>;
-  public movies: Observable<Movie[]>;
   public collectionName = 'movies';
 
   constructor(
     private movieStore: MovieStore,
-    private movieQuery: MovieQuery,
     private authQuery: AuthQuery,
     private db: AngularFirestore,
   ) {
     this.movieCollection = this.db.collection<Movie>(this.collectionName);
+    this.subscribeOnUserMovies();
   }
 
   // tslint:disable-next-line
@@ -43,10 +43,15 @@ export class MovieService {
     return this.movieCollection.doc(movie.id).delete();
   }
 
-  public subscribeOnUserMovies(userId) {
-    this.db.collection<Movie>(this.collectionName, ref => ref.where('userId', '==', userId))
-    .valueChanges()
-    .subscribe((movies: Movie[]) => {
+  public subscribeOnUserMovies() {
+    this.authQuery.selectUser$.pipe(
+      switchMap(({uid}) => this.db
+        .collection<Movie>(this.collectionName, ref => ref.where('userId', '==', uid))
+        .valueChanges()
+      ),
+      takeUntil(this.authQuery.isLogout$)
+    ).subscribe((movies: Movie[]) => {
+      console.log("movie")
       this.movieStore.set(movies);
     });
   }

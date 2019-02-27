@@ -3,7 +3,7 @@ import { QueryEntity } from '@datorama/akita';
 import { State, MovieStore } from './movie.store';
 import { Movie } from './movie.model';
 import { Observable, combineLatest } from 'rxjs';
-import { map, distinctUntilChanged, filter } from 'rxjs/operators';
+import { map, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { AuthQuery } from 'src/app/auth/+state/auth.query';
 
 @Injectable({
