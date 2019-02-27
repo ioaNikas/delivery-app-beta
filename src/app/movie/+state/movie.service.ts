@@ -31,7 +31,9 @@ export class MovieService {
       userId : this.authQuery.idUser,
     });
 
-    return this.movieCollection.doc(movie.id).set(movie);
+    return this.movieCollection.doc(movie.id).set(movie).then(() => {
+      //return this.movieCollection.doc(movie.id).collection('templates').add({ "templateId": 1});
+    });
   }
 
   public updateMovie(movie: Movie, form) {

@@ -1,0 +1,27 @@
+# pour l'instant users = organizations
+{
+  "id": 45439,
+  "job": "distributor",
+  "templates" : {  # sub collection
+    "templateId": {
+      "name": "Film FR Netflix",
+      "materials": { # sub collection
+        "materialId1": {
+          "value": "Francais 5.1 Dolby Digital",
+          "category": "Audio"
+        },
+        "materialId2": {
+          "value": "Anglais 5.1 Dolby Digital",
+          "category": "Audio"
+        }
+      }
+    }
+  },
+  "movies" : { # sub collection
+    "movieIdFromMovieCollection": {
+      "customField1": "", # champs propres à l'organisation pour ce film (uniquement pour eux)
+      "customField2": ""  # champs propres à l'organisation pour ce film (uniquement pour eux)
+    }
+    
+  }
+}

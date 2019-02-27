@@ -1,0 +1,19 @@
+# ce document est initialisé lorsque le producteur a choisi ce distributeur
+# (via formulaire sur front)
+{
+  "dealId": 124556,
+  "movieId": 123,
+  "productorId": 345,
+  "distributorId": 1245,
+  "materials": { # sub collection
+    "materialId": {
+      "value": "Francais 5.1 Dolby Digital",
+      "category": "Audio",
+    }
+  },
+  "validated": ["productorId", "distributorId"], # preuve que le productorId et distributorId se sont mis d'accord
+  #OU
+  "txId" :"hash" # preuve que le productorId et distributorId se sont mis d'accord
+}
+
+# une fois le deal validé, une fonction va mettre à jour le movie.materials

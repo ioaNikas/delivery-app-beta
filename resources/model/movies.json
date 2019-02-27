@@ -1,0 +1,19 @@
+{
+  "id": 1234,
+  "title": "Jurassic Park",
+  "director": "Steven Spieldberg",
+  "kind": "thriller",
+  "userId": "productorId",
+  "materials": { # sub collection
+    # l'insertion dans cette sous collection se fait par une function
+    # qui écoute un smart contract (crée à la validation du deal)
+    "materialId": {
+      "value" : "Francais 5.1 Dolby Digital",
+      "category" : "Audio",
+      "delivered" : false, # passe à true après approbation laboratoire
+      "usedBy": ["idOrgA", "idOrgB"],
+      # OU
+      "dealIds" : ["dealIdA", "dealIdB"]
+    },
+  }
+}
