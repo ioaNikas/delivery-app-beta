@@ -1,0 +1,53 @@
+<!-- <form [formGroup]="form" (ngSubmit)="addTemplate()">
+
+  <h3>Categories</h3>
+  <input type="text">
+  <button (click)="addCategory()">Add Category</button>
+
+  <div *ngFor="let category of categories.controls" formGroupName="category">
+      <h3>Category</h3>
+
+      <label>
+        material1:
+        <input type="text" formControlName="material1">
+      </label>
+
+      <label>
+        material2:
+        <input type="text" formControlName="material2">
+      </label>
+
+      <label>
+        material3:
+        <input type="text" formControlName="material3">
+      </label>
+
+      <label>
+        material4:
+        <input type="text" formControlName="material4">
+      </label>
+  </div>
+
+  <button type="sumbit">Add template</button>
+
+</form> -->
+
+
+<form [formGroup]="form" (ngSubmit)="addTemplate()">
+
+    <h3>Categories</h3>
+    <input type="text">
+    <button (click)="addCategory()">Add Category</button>
+
+    <div *ngFor="let category of categories.controls; let i=index" formGroupName="category">
+        <h3>Category</h3>
+        <button (click)="addMaterial(i)">Add Material</button>
+        <div *ngFor="let material of this.form.value.category.materials">
+            <h2>material</h2>
+        </div>
+
+    </div>
+
+    <button type="sumbit">Add template</button>
+
+  </form>

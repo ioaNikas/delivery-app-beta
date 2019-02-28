@@ -37,6 +37,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ViewMovieComponent } from './movie/view-movie/view-movie.component';
 import { WelcomeComponent } from './auth/welcome/welcome.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ViewMaterialComponent } from './material/view-material/view-material.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     ViewMovieComponent,
     LoggerComponent,
     WelcomeComponent,
+    ViewMaterialComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     RouterModule.forRoot([
       { path: 'movie/:id', component: ViewMovieComponent },
       { path: 'welcome', component: WelcomeComponent },
+      { path: 'template', component: ViewMaterialComponent },
       { path: '', pathMatch: 'full', redirectTo: 'welcome' },
     ]),
     environment.production ?
