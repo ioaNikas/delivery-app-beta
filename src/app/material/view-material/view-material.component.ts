@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { MaterialService } from '../+state/index';
+
 
 @Component({
   selector: 'app-view-material',
@@ -8,43 +10,85 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 })
 export class ViewMaterialComponent implements OnInit {
 
+
+  data = {
+    categories: [
+      {
+        category: 'example category',
+        materials: [
+          {
+            value: 'example material',
+          }
+        ]
+      }
+    ]
+  };
+
   form: FormGroup;
 
-  constructor(private builder: FormBuilder) { }
+
+  constructor(private builder: FormBuilder, private materialService: MaterialService) {}
 
   ngOnInit() {
     this.form = this.builder.group({
-      category: this.builder.group({
-
-      }),
-      categories: this.builder.array([
-        this.builder.array([
-          this.builder.control('')
-        ])
-      ])
+      categories: this.builder.array([])
     });
+
+    this.setCategories();
   }
 
   get categories() {
     return this.form.get('categories') as FormArray;
   }
 
-  addCategory() {
-    this.categories.push(this.builder.control(''));
+  addNewCategory() {
+    const control = this.form.controls.categories as FormArray;
+    control.push(
+      this.builder.group({
+        category: [''],
+        materials: this.builder.array([])
+      })
+    );
   }
 
-  get materials() {
-    return this.form.get('materials') as FormArray;
+  deleteCategory(index) {
+    const control = this.form.controls.categories as FormArray;
+    control.removeAt(index);
   }
 
-  addMaterial(i) {
-    this.categories[i].push(this.builder.control(''));
+  addNewMaterial(control) {
+    control.push(
+      this.builder.group({
+        value: [''],
+      }));
   }
 
+  deleteMaterial(control, index) {
+    control.removeAt(index);
+  }
 
+  setCategories() {
+    const control = this.form.controls.categories as FormArray;
+    this.data.categories.forEach(eachCategory => {
+      control.push(this.builder.group({
+        category: eachCategory.category,
+        materials: this.setMaterials(eachCategory) }));
+    });
+  }
 
-  public addTemplate() {
+  setMaterials(control) {
+    const arr = new FormArray([]);
+    control.materials.forEach(eachMaterial => {
+      arr.push(this.builder.group({
+        value: eachMaterial.value
+      }));
+    });
+    return arr;
+  }
+
+  submitTemplate() {
     console.log(this.form.value);
+    this.materialService.addTemplate(this.form.value);
   }
 
 

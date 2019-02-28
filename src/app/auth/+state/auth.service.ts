@@ -51,6 +51,7 @@ export class AuthService {
 
  public updateUser(user: Partial<User>) {
   const currentUser = this.authQuery.getValue().user;
+  // TODO fix race condition
   return this.authCollection.doc(currentUser.uid).set({...currentUser, ...user});
  }
 
