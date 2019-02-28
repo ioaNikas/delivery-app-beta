@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { MaterialService } from '../+state/index';
+import { MaterialService, Material, MaterialQuery } from '../+state/index';
+import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -9,7 +11,6 @@ import { MaterialService } from '../+state/index';
   styleUrls: ['./view-material.component.css']
 })
 export class ViewMaterialComponent implements OnInit {
-
 
   data = {
     categories: [
@@ -24,15 +25,20 @@ export class ViewMaterialComponent implements OnInit {
     ]
   };
 
+
+  materials$: Observable<Material[]>;
+
   form: FormGroup;
 
 
-  constructor(private builder: FormBuilder, private materialService: MaterialService) {}
+  constructor(private builder: FormBuilder, private materialService: MaterialService, private materialQuery: MaterialQuery) {}
 
   ngOnInit() {
     this.form = this.builder.group({
       categories: this.builder.array([])
     });
+
+    this.materials$ = this.materialQuery.selectAll();
 
     this.setCategories();
   }

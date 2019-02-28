@@ -1,8 +1,10 @@
+import { Material } from 'src/app/material/+state';
 
 // tslint:disable-next-line: interface-over-type-literal
 export type User = {
   uid: string;
   job: string;
+  materials: Material[]
 };
 
 export interface UserForm {

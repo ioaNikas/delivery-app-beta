@@ -27,3 +27,7 @@
 </form>
 
 <pre>{{form.value | json}}</pre>
+
+<ul *ngFor="let material of materials$ | async">
+  <li>{{ material.value}}</li>
+</ul>

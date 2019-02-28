@@ -5,6 +5,7 @@ import { createUser, User } from './auth.model';
 import { AuthQuery } from './auth.query';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { filter, switchMap } from 'rxjs/operators';
+import { MaterialStore } from 'src/app/material/+state/material.store';
 
 @Injectable({
  providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
    private afAuth: AngularFireAuth,
    private store: AuthStore,
    private db: AngularFirestore,
-   private authQuery: AuthQuery) {
+   private authQuery: AuthQuery,
+   private materialStore: MaterialStore) {
   this.authCollection = this.db.collection<User>('users');
 
   this.subscribeOnUser();
@@ -51,6 +53,7 @@ export class AuthService {
 
  public updateUser(user: Partial<User>) {
   const currentUser = this.authQuery.getValue().user;
+  console.log(currentUser)
   // TODO fix race condition
   return this.authCollection.doc(currentUser.uid).set({...currentUser, ...user});
  }
@@ -66,6 +69,6 @@ export class AuthService {
     this.afAuth.authState.pipe(
       filter(user => !!user),
       switchMap(({uid}) => this.db.collection<User>('users').doc(uid).valueChanges())
-    ).subscribe((user: User) => this.store.update({ user }));
+    ).subscribe((user: User) => { this.store.update({ user }); this.materialStore.set(user.materials); } );
   }
 }

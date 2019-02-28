@@ -17,10 +17,10 @@ export class MaterialService {
 
    public addTemplate(form) {
      const materials = [];
-     for (let i = 0; i < form.categories.length; i++) {
-        const category = form.categories[i].category;
-        for (let j = 0; j < form.categories[i].materials.length; j++) {
-          const material: Material = createMaterial( {category, value: form.categories[i].materials[j].value} );
+     for (const formCategory of form.categories) {
+        const category = formCategory.category;
+        for (const formMaterial of formCategory.materials) {
+          const material: Material = createMaterial( {category, value: formMaterial.value} );
           materials.push(material);
         }
      }
