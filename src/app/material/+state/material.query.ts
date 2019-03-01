@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { Material } from './material.model';
 import { MaterialStore, State } from './material.store';
-import { reduce } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
 
 
 
@@ -15,37 +17,26 @@ export class MaterialQuery extends QueryEntity<State, Material> {
     super(store);
   }
 
-  public template$() {
-    return this.selectAll()
-    .pipe(
-   //   reduce(this.selectAll(), [])
+
+  public template$(): Observable<any> {
+    return this.selectAll().pipe(
+      map(materials => materials.reduce( (acc, item) => {
+        return {
+          ...acc,
+          [item.category]: [...(acc[item.category] || []), item]
+        };
+
+      }, {} )
+      )
     );
   }
 
-  // var stats = [
-  //   { site: "google.fr", browser: "Chrome", value: "50%" },
-  //   { site: "google.fr", browser: "FireFox", value: "30%" },
-  //   { site: "google.fr", browser: "Internet Explorer", value: "20%" },
-  //   { site: "mozilla.fr", browser: "FireFox", value: "60%" },
-  //   { site: "mozilla.fr", browser: "Internet Explorer", value: "20%" },
-  //   { site: "microsoft.fr", browser: "Chrome", value: "10%" },
-  //   { site: "microsoft.fr", browser: "FireFox", value: "20%" },
-  // ];
-  private compareSite(category, material) {
-    return category === material.site;
-  }
-  private containSite(category, materials) {
-    return materials.some(this.compareSite.bind(null, category));
-  }
-  private groupBySite(memo, material) {
-    const category = memo.filter(this.containSite.bind(null, material.category));
-    if (category.length > 0) {
-      category[0].push(material);
-    } else {
-      memo.push([material]);
-    }
-    return memo;
-  }
-  // Nous utilisons un tableau vide comme accumulateur
-  // var results = stats.reduce(groupBySite, []);
+
+
+  // reduce((acc, item) {
+  //   const val = {category: 'category' , materials: item['category'] };
+  //   groups[val.materials] = groups[val.materials] || [];
+  //   groups[val.materials].push(item);
+  //   return groups;
+  // }, {})));
 }

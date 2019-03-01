@@ -26,8 +26,9 @@
   <button type="submit">Send template</button>
 </form>
 
+
 <pre>{{form.value | json}}</pre>
 
-<ul *ngFor="let material of materials$ | async">
-  <li>{{ material.value}}</li>
+ <ul *ngIf="template$ | async as template">
+  <pre>{{ template | json}}</pre>
 </ul>

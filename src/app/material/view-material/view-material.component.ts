@@ -12,21 +12,46 @@ import { Observable } from 'rxjs';
 })
 export class ViewMaterialComponent implements OnInit {
 
+  // data = {
+  //   categories: [
+  //     {
+  //       category: 'example category',
+  //       materials: [
+  //         {
+  //           value: 'example material',
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       category: 'example category',
+  //       materials: [
+  //         {
+  //           value: 'example material',
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // };
+
   data = {
-    categories: [
+    'example category': [
       {
         category: 'example category',
-        materials: [
-          {
-            value: 'example material',
-          }
-        ]
+        id: "a9d36947be",
+        value: "example material"
+      }
+    ],
+    "ok": [
+      {
+        category: "ok",
+        id: "eae92a42bb",
+        value: "ok"
       }
     ]
   };
 
 
-  materials$: Observable<Material[]>;
+  template$: Observable<any>;
 
   form: FormGroup;
 
@@ -38,9 +63,9 @@ export class ViewMaterialComponent implements OnInit {
       categories: this.builder.array([])
     });
 
-    this.materials$ = this.materialQuery.selectAll();
+    this.template$ = this.materialQuery.template$();
+    this.template$.subscribe(data => this.setCategories(data));
 
-    this.setCategories();
   }
 
   get categories() {
@@ -73,18 +98,26 @@ export class ViewMaterialComponent implements OnInit {
     control.removeAt(index);
   }
 
-  setCategories() {
+  setCategories(data) {
     const control = this.form.controls.categories as FormArray;
-    this.data.categories.forEach(eachCategory => {
-      control.push(this.builder.group({
-        category: eachCategory.category,
-        materials: this.setMaterials(eachCategory) }));
-    });
+    // this.data.categories.forEach(eachCategory => {
+    //   control.push(this.builder.group({
+    //     category: eachCategory.category,
+    //     materials: this.setMaterials(eachCategory) }));
+    // });
+    const object = data;
+    console.log(this.data)
+    Object.keys(object).forEach( (key) => {
+         console.log(object[key]);
+         control.push(this.builder.group({
+         category: key,
+         materials: this.setMaterials(object[key]) }));
+   });
   }
 
   setMaterials(control) {
     const arr = new FormArray([]);
-    control.materials.forEach(eachMaterial => {
+    control.forEach(eachMaterial => {
       arr.push(this.builder.group({
         value: eachMaterial.value
       }));
@@ -96,6 +129,5 @@ export class ViewMaterialComponent implements OnInit {
     console.log(this.form.value);
     this.materialService.addTemplate(this.form.value);
   }
-
 
 }
