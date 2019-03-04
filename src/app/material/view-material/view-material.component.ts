@@ -59,17 +59,29 @@ export class ViewMaterialComponent implements OnInit {
   constructor(private builder: FormBuilder, private materialService: MaterialService, private materialQuery: MaterialQuery) {}
 
   ngOnInit() {
+    this.template$ = this.materialQuery.template$();
+
     this.form = this.builder.group({
       categories: this.builder.array([])
     });
 
-    this.template$ = this.materialQuery.template$();
-    this.template$.subscribe(data => this.setCategories(data));
+    this.template$.subscribe(data =>
+      {
+        this.form = this.builder.group({
+          categories: this.builder.array([])
+        });
+        this.setCategories(data);
+      }
+        );
 
   }
 
   get categories() {
     return this.form.get('categories') as FormArray;
+  }
+
+  getMaterials(category) {
+    return category.get('materials') as FormArray;
   }
 
   addNewCategory() {
@@ -99,19 +111,13 @@ export class ViewMaterialComponent implements OnInit {
   }
 
   setCategories(data) {
+    console.log("lala")
+    this.form.reset();
     const control = this.form.controls.categories as FormArray;
-    // this.data.categories.forEach(eachCategory => {
-    //   control.push(this.builder.group({
-    //     category: eachCategory.category,
-    //     materials: this.setMaterials(eachCategory) }));
-    // });
-    const object = data;
-    console.log(this.data)
-    Object.keys(object).forEach( (key) => {
-         console.log(object[key]);
+    Object.keys(data).forEach( (key) => {
          control.push(this.builder.group({
          category: key,
-         materials: this.setMaterials(object[key]) }));
+         materials: this.setMaterials(data[key]) }));
    });
   }
 

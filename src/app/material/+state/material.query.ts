@@ -31,12 +31,13 @@ export class MaterialQuery extends QueryEntity<State, Material> {
     );
   }
 
-
-
-  // reduce((acc, item) {
-  //   const val = {category: 'category' , materials: item['category'] };
-  //   groups[val.materials] = groups[val.materials] || [];
-  //   groups[val.materials].push(item);
-  //   return groups;
-  // }, {})));
+  // public templatesOfUser$(): Observable<any> {
+  //   return combineLatest([
+  //     this.selectAll(),
+  //     this.authQuery.select(state => state.user)
+  //   ]).pipe(
+  //     filter(([movies, user]) => !!user),
+  //     map(([movies, user]) => movies.filter(movie => movie.userId === user.uid))
+  //   );
+  // }
 }

@@ -27,6 +27,8 @@ export class MaterialService {
 
      const currentUser = this.authQuery.getValue().user;
      this.authCollection.doc(currentUser.uid).update({materials});
+
+     this.authCollection.doc(currentUser.uid).collection('templates').add({materials});
    }
 
 }

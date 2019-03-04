@@ -1,5 +1,5 @@
 <button type="button" (click)="addNewCategory()">Add new Category</button><br><br>
-<form [formGroup]="form" (ngSubmit)="submitTemplate()">
+<form *ngIf="template$ | async" [formGroup]="form" (ngSubmit)="submitTemplate()">
   <div formArrayName="categories">
     <div *ngFor="let category of categories.controls; let i=index">
     <fieldset>
@@ -8,16 +8,16 @@
         <label>Category Name: </label>
         <input formControlName="category" /><span><button type="button" (click)="deleteCategory(i)">Delete Category</button></span>
         <div formArrayName="materials">
-          <div *ngFor="let material of category.get('materials').controls; let j=index">
+          <div *ngFor="let material of getMaterials(category).controls; let j=index">
             <fieldset>
             <legend><h4>Material {{j+1}}</h4></legend>
             <div [formGroupName]="j">
               <label>Material Name:</label>
-              <input formControlName="value" /><span><button type="button" (click)="deleteMaterial(category.controls.materials, j)">Delete Material</button></span>
+              <input formControlName="value" /><span><button type="button" (click)="deleteMaterial(getMaterials(category), j)">Delete Material</button></span>
             </div>
             </fieldset>
           </div>
-          <button (click)="addNewMaterial(category.controls.materials)" type="button">Add new Material</button>
+          <button (click)="addNewMaterial(getMaterials(category))" type="button">Add new Material</button>
         </div>
       </div>
     </fieldset>
